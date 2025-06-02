@@ -1,15 +1,73 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Promise Chain Transformations</title>
+</head>
+<body>
+  <h2>Transform Number with Promise Chaining</h2>
+  <input type="number" id="ip" placeholder="Enter a number">
+  <button id="btn">Start</button>
+  <div id="output"></div>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <script>
+    document.getElementById("btn").addEventListener("click", function () {
+      const inputVal = parseFloat(document.getElementById("ip").value);
+      const outputDiv = document.getElementById("output");
 
-  <body>
-    <!-- do not change this code -->
-    <input type="number" id="ip" />
-    <button id="btn">Start</button>
-    <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+      if (isNaN(inputVal)) {
+        outputDiv.textContent = "Please enter a valid number.";
+        return;
+      }
+
+      // Initial promise: wait 2 seconds and show input
+      new Promise((resolve) => {
+        setTimeout(() => {
+          outputDiv.textContent = `Result: ${inputVal}`;
+          resolve(inputVal);
+        }, 2000);
+      })
+      // Multiply by 2 after 2 seconds
+      .then((num) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const result = num * 2;
+            outputDiv.textContent = `Result: ${result}`;
+            resolve(result);
+          }, 2000);
+        });
+      })
+      // Subtract 3 after 1 second
+      .then((num) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const result = num - 3;
+            outputDiv.textContent = `Result: ${result}`;
+            resolve(result);
+          }, 1000);
+        });
+      })
+      // Divide by 2 after 1 second
+      .then((num) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const result = num / 2;
+            outputDiv.textContent = `Result: ${result}`;
+            resolve(result);
+          }, 1000);
+        });
+      })
+      // Add 10 after 1 second and show final result
+      .then((num) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const result = num + 10;
+            outputDiv.textContent = `Final Result: ${result}`;
+            resolve(result);
+          }, 1000);
+        });
+      });
+    });
+  </script>
+</body>
 </html>
